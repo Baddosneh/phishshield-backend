@@ -1,0 +1,33 @@
+{
+  "name": "phishshield-ai-backend",
+  "version": "1.0.0",
+  "description": "Backend for PhishShield AI, a SaaS web application for detecting phishing attempts.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-rate-limit": "^7.5.0",
+    "express-validator": "^7.2.1",
+    "googleapis": "^148.0.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.9",
+    "node-cron": "^4.0.7",
+    "nodemailer": "^7.0.2",
+    "stripe": "^18.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "author": "Your Name",
+  "license": "ISC"
+}
