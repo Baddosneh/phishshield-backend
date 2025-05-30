@@ -13,7 +13,7 @@ const paystackRoutes = require('./routes/paystack');
 const rateLimit = require('express-rate-limit');
 const paystackWebhook = require('./routes/paystackWebhook');
 
-require('./utils/planScheduler');
+require('./utils/planSchedulers');
 
 const cors = require('cors');
 
