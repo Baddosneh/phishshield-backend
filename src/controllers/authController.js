@@ -132,7 +132,7 @@ exports.resetPasswordRequest = async (req, res) => {
       }
     });
 
-    const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
+    const resetUrl = `https://phishshield-seven.vercel.app/reset-password?token=${resetToken}`;
     const mailOptions = {
       to: user.email,
       from: process.env.EMAIL_USER,
@@ -165,7 +165,6 @@ exports.resetPassword = async (req, res) => {
 
         
 
-        // Find user by token and check if token is still valid
         const user = await User.findOne({
             resetPasswordToken: token,
             resetPasswordExpires: { $gt: Date.now() }

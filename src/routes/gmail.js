@@ -42,7 +42,7 @@ router.get('/callback', async (req, res) => {
         const { tokens } = await oAuth2Client.getToken(code);
         // Save tokens to the authenticated user
         await User.findByIdAndUpdate(userId, { gmailTokens: tokens });
-        res.redirect('http://localhost:3000/dashboard?gmail=success'); 
+        res.redirect('https://phishield-seven.vercel.app/dashboard?gmail=success');
     } catch (err) {
         console.error('Error saving token:', err);
         res.status(500).send('Failed to authenticate with Gmail');
@@ -105,7 +105,7 @@ router.get('/auth-url', authMiddleware, (req, res) => {
 
 router.post('/analyze', authMiddleware, async (req, res) => {
   try {
-    const { emails } = req.body; // [{ id, snippet, body, ... }]
+    const { emails } = req.body; 
     if (!emails || !Array.isArray(emails)) {
       return res.status(400).json({ error: 'No emails provided' });
     }

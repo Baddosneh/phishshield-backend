@@ -20,10 +20,10 @@ router.post('/initialize',
     const response = await axios.post(
       'https://api.paystack.co/transaction/initialize',
       {
-        amount: Math.round(amount * 100), // Paystack expects amount in pesewas (GHS)
+        amount: Math.round(amount * 100), 
         email,
         currency: "GHS",
-        callback_url: 'http://localhost:3000/dashboard?payment=success',
+        callback_url: 'https://phishshield-seven.vercel.app/dashboard?payment=success',
         metadata: {
           plan,
         },
