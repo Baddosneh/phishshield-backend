@@ -21,12 +21,17 @@ const cors = require('cors');
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 app.use('/api/paystack/webhook', paystackWebhook);
 
 
 // Middleware
 app.use(cors({
-  origin: 'https://phishshield-seven.vercel.app',
+  origin: [
+    'https://phishshield-seven.vercel.app',
+    'http://localhost:3000'
+  ]
 }));
 app.use(helmet());
 app.use(express.json({ limit: '5mb' }));
