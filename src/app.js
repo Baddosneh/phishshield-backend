@@ -29,7 +29,7 @@ app.use('/api/paystack/webhook', paystackWebhook);
 // Middleware
 app.use(cors({
   origin: [
-    'https://phishshield-seven.vercel.app',
+    'https://phishshield-liart.vercel.app',
     'http://localhost:3000'
   ]
 }));
