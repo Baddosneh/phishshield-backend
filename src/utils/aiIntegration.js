@@ -9,7 +9,7 @@ const axios = require('axios');
 async function analyzeEmail(emailContent) {
     try {
         const response = await axios.post(
-            'http://localhost:5001/analyze_email',
+            `${process.env.EMAIL_ANALYZER_URL}/analyze_email`,
             { email_text: emailContent },
             {
                 headers: {
@@ -25,15 +25,14 @@ async function analyzeEmail(emailContent) {
 }
 
 /**
- * Analyze a URL for phishing using the same AI endpoint as email analysis.
- * @param {string} url - The URL to check.
+ * @param {string} url - The URL to analyze for phishing.
  * @returns {Promise<Object>} - The AI model's prediction result.
  */
 async function analyzeURL(url) {
     try {
         const response = await axios.post(
-            'http://localhost:5001//analyze_url',
-            { url }, // Send the URL for unified processing
+            `${process.env.URL_ANALYZER_URL}/analyze_url`,
+            { url }, 
             {
                 headers: {
                     'Content-Type': 'application/json',
