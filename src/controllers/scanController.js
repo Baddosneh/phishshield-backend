@@ -1,6 +1,6 @@
 
 const Scan = require('../models/Scan');
-const { analyzeEmail, analyzeURL } = require('../utils/aiIntegration');
+const { analyzeEmail, analyzeURL, analyzeText } = require('../utils/aiIntegration');
 const User = require('../models/User');
 const { validationResult } = require('express-validator');
 
@@ -85,3 +85,44 @@ exports.scanURL = async (req, res) => {
     res.status(500).json({ error: 'URL scan failed' });
   }
 };
+
+exports.scanSms = async (req, res) => {
+  try {
+
+    const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+      }
+    const { input } = req.body;
+
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+    // If not premium, check free scans
+    if (!user.plan) {
+      if (user.freeEmailScans <= 0) {
+        return res.status(403).json({ error: 'Free sms scan limit reached. Please upgrade your plan.' });
+      }
+      user.freeEmailScans -= 1;
+      await user.save();
+    }
+
+    const smsResult = await analyzeText(input);
+
+    // Save the scan result to the database with correct schema fields
+    const smsScan = new Scan({
+      scanInput: input,
+      scanType: 'sms',
+      results: smsResult,
+      userId: req.user._id,
+      createdAt: new Date()
+    });
+    await smsScan.save();
+
+    return res.json({ ...smsResult, _id: smsScan._id, createdAt: smsScan.createdAt });
+  } catch (err) {
+    console.error('sms scan error:', err);
+    res.status(500).json({ error: 'sms scan failed' });
+  }
+};
+

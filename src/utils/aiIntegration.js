@@ -45,8 +45,33 @@ async function analyzeURL(url) {
         throw new Error('URL phishing analysis failed');
     }
 }
+
+
+/**
+ * Analyze email content for phishing using a Hugging Face model.
+ * @param {string} textInput - The sms text to analyze.
+ * @returns {Promise<Object>} - The model's prediction result.
+ */
+async function analyzeText(textInput) {
+    try {
+        const response = await axios.post(
+            `${process.env.SMS_ANALYZER_URL}/analyze_sms`,
+            { sms_text: textInput },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error analyzing sms:', error?.response?.data || error.message);
+        throw new Error('sms phishing analysis failed');
+    }
+}
 //new comments
 module.exports = {
     analyzeEmail,
     analyzeURL,
+    analyzeText,
 };
